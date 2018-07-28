@@ -13,63 +13,14 @@ const mouse = {
 
 const colors = ['#2185C5', '#7ECEFD', '#FFF6E5', '#FF7F66']
 
-// Event Listeners
-/*addEventListener('mousemove', event => {
-    mouse.x = event.clientX
-    mouse.y = event.clientY
-})
 
 addEventListener('resize', () => {
-    canvas.width = innerWidth
-    canvas.height = innerHeight
-
-    init()
-})*/
-
-
+	canvas.width = innerWidth;
+	canvas.height = innerHeight;
+	init();
+})
 
 let objects = [];
-let sparcles = [];
-
-function rendomVel(){
-    var vel = Math.floor(Math.random()) === 0 ? -Math.random()*2 : Math.random()*2;
-    return vel;
-}
-
-//sparcles
-function Sparcles(x,y,radius,color,velx,vely,dy =1){
-    this.x = x;
-    this.y = y;
-    this.raidus = radius;
-    this.color = color;
-    this.velx = velx;
-    this.vely = vely;
-    this.dy = dy;
-}
-
-Sparcles.prototype.update = function(){
-    this.vely += this.dy;
-    this.x += this.velx;
-    this.y += this.vely;
-
-    if (this.x + this.radius > canvas.width){
-        this.x = canvas.width;
-        this.velx = -this.velx;
-    }else if(this.x - this.radius < 0){
-        this.x = 0;
-        this.velx = -this.velx;
-    }
-
-    if (this.y + this.radius > canvas.width){
-        this.y = canvas.height;
-        this.vely = -this.vely;
-    }else if(this.y - this.radius < 0){
-        this.y = 0;
-        this.vely = -this.vely;
-    }
-
-}
-
 
 
 
@@ -89,16 +40,6 @@ Object.prototype.update = function() {
         if (this.radius >= 25){
             this.radius = 25;
             this.reduce = -this.reduce;
-            for (var i=0;i<10;i++){
-                var spark = new Sparcles(
-                        this.x,
-                        this.y,
-                        '#aaa',
-                        rendomVel(),
-                        rendomVel()
-                    )
-                sparcles.push(spark)
-            }
         }else if(this.radius <= 2){
             this.radius = 2;
             this.reduce = -this.reduce;
@@ -120,15 +61,7 @@ Object.prototype.draw = function() {
     });
 }
 
-Sparcles.prototype.draw = function() {
-    sparcles.forEach(object =>{
-        c.beginPath()
-        c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-        c.fillStyle = this.color;
-        c.fill()
-        c.closePath()
-    });
-}
+
 
 
 //let stars = [];
@@ -137,7 +70,7 @@ Sparcles.prototype.draw = function() {
 function init() {
     objects = [];
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 25; i++) {
         var radius =Math.random()*20 + 5;
         var ob = new Object(
                 Math.random()*canvas.width + radius,
@@ -162,10 +95,7 @@ function animate() {
             object.update();
             object.draw();
     });
-    sparcles.forEach(object => {
-            object.update();
-            object.draw();
-    });
+
 }
 
 init()
